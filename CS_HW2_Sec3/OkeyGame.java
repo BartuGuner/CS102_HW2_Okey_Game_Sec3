@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
 public class OkeyGame {
 
     Player[] players;
@@ -33,7 +36,31 @@ public class OkeyGame {
      * this method assumes the tiles are already shuffled
      */
     public void distributeTilesToPlayers() {
+        ArrayList<Tile> tilesArrList = new ArrayList<>();
+        int tilesToGive;
 
+        for (int i = 0; i < tiles.length; i++) {
+            tilesArrList.add(tiles[i]);  
+        }
+
+        for(int j = 0; j < players.length; j++){
+            if(j == 0){
+                tilesToGive = 15;
+            }
+            else{
+                tilesToGive = 14;
+            }
+
+            for (int k = 0; k < tilesToGive; k++) {
+                players[j].playerTiles[k] = tilesArrList.get(0); 
+                tilesArrList.remove(0); 
+            }
+            players[j].numberOfTiles = tilesToGive; 
+
+            for (int l = 0; l < tilesArrList.size(); l++) {
+                tiles[l] = tilesArrList.get(l);
+            }
+        }
     }
 
     /*
@@ -58,6 +85,17 @@ public class OkeyGame {
      * TODO: should randomly shuffle the tiles array before game starts
      */
     public void shuffleTiles() {
+        ArrayList<Tile> tilesToShuffle = new ArrayList<>();
+
+        for(int i = 0; i < tiles.length; i++){
+            tilesToShuffle.add(tiles[i]);
+        }
+
+        Collections.shuffle(tilesToShuffle);
+    
+        for (int i = 0; i < tiles.length; i++) {
+            tiles[i] = tilesToShuffle.get(i);
+        }
 
     }
 
