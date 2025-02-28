@@ -93,7 +93,21 @@ public class OkeyGame {
      * it should return the toString method of the tile so that we can print what we picked
      */
     public String getTopTile() {
-        return null;
+        if (tiles.length == 0) {
+            return "No more tiles in the stack."; 
+        }
+    
+        Tile topTile = tiles[0]; 
+    
+        Tile[] newTiles = new Tile[tiles.length - 1];
+    
+        for (int i = 1; i < tiles.length; i++) {
+            newTiles[i - 1] = tiles[i];
+        }
+    
+        tiles = newTiles; 
+    
+        return topTile.toString(); // getter
     }
 
     /*
