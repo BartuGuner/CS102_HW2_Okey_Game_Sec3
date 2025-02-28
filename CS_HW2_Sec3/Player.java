@@ -6,14 +6,19 @@ public class Player {
     public Player(String name) {
         setName(name);
         playerTiles = new Tile[15]; // there are at most 15 tiles a player owns at any time
-        numberOfTiles = 0; // currently this player owns 0 tiles, will pick tiles at the beggining of the game
+        numberOfTiles = 0; // currently this player owns 0 tiles, will pick tiles at the beggining of the
+                           // game
     }
 
     /*
      * TODO: removes and returns the tile in given index
      */
     public Tile getAndRemoveTile(int index) {
-        return null;
+        Tile returninTile = playerTiles[index];
+        for (int i = index; i < playerTiles.length; i++) {
+            playerTiles[i] = playerTiles[i + 1];
+        }
+        return returninTile;
     }
 
     /*
@@ -22,6 +27,20 @@ public class Player {
      * make sure playerTiles are not more than 15 at any time
      */
     public void addTile(Tile t) {
+        if (numberOfTiles >= 15) {
+            System.out.println("Can not add more tiles");
+            return;
+        }
+
+        int index = 0;
+        while (index < numberOfTiles && t.getValue() > playerTiles[index].getValue()) {
+            index++;
+        }
+        for (int i = numberOfTiles; i > index; i--) {
+            playerTiles[i] = playerTiles[i - 1];
+        }
+        playerTiles[index] = t;
+        numberOfTiles++;
 
     }
 
@@ -29,6 +48,7 @@ public class Player {
      * TODO: checks if this player's hand satisfies the winning condition
      * to win this player should have 3 chains of length 4, extra tiles
      * does not disturb the winning condition
+     * 
      * @return
      */
     public boolean isWinningHand() {
@@ -38,7 +58,7 @@ public class Player {
     public int findPositionOfTile(Tile t) {
         int tilePosition = -1;
         for (int i = 0; i < numberOfTiles; i++) {
-            if(playerTiles[i].compareTo(t) == 0) {
+            if (playerTiles[i].compareTo(t) == 0) {
                 tilePosition = i;
             }
         }
