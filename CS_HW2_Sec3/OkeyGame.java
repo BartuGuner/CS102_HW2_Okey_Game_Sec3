@@ -69,7 +69,22 @@ public class OkeyGame {
      * it should return the toString method of the tile so that we can print what we picked
      */
     public String getLastDiscardedTile() {
-        return null;
+
+        String result = "";
+        if (lastDiscardedTile != null) {
+
+            players[currentPlayerIndex].addTile(lastDiscardedTile);
+            lastDiscardedTile = null;
+
+            result = players[currentPlayerIndex].getName().toString() + "get the last discarded tile: " + lastDiscardedTile.toString();
+
+            return result;
+        }
+        else{
+            result = "There is no discarded tile!";
+            return result;
+        }
+
     }
 
     /*
@@ -104,7 +119,9 @@ public class OkeyGame {
      * finished the game, use isWinningHand() method of Player to decide
      */
     public boolean didGameFinish() {
-        return false;
+
+        return players[currentPlayerIndex].isWinningHand();
+        
     }
 
     /*
@@ -135,6 +152,13 @@ public class OkeyGame {
      */
     public void discardTile(int tileIndex) {
 
+        if (tileIndex >= 0 && tileIndex < players[currentPlayerIndex].numberOfTiles) {
+
+            lastDiscardedTile = players[currentPlayerIndex].playerTiles[tileIndex];
+            players[currentPlayerIndex].getAndRemoveTile(tileIndex);
+            displayDiscardInformation();
+
+        }
     }
 
     public void displayDiscardInformation() {
