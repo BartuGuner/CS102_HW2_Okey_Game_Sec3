@@ -94,20 +94,19 @@ public class OkeyGame {
      */
     public String getTopTile() {
         if (tiles.length == 0) {
-            return "No more tiles in the stack."; 
-        }
+            return "There is no more tiles in the stack.";
+        }  
+        String topTile = tiles[tiles.length - 1].toString();
     
-        Tile topTile = tiles[0]; 
-    
+        players[currentPlayerIndex].addTile(tiles[tiles.length - 1]);
+
         Tile[] newTiles = new Tile[tiles.length - 1];
     
-        for (int i = 1; i < tiles.length; i++) {
-            newTiles[i - 1] = tiles[i];
-        }
+        System.arraycopy(tiles, 0, newTiles, 0, newTiles.length);
     
-        tiles = newTiles; 
+        tiles = newTiles;
     
-        return topTile.toString(); // getter
+        return topTile;
     }
 
     /*
