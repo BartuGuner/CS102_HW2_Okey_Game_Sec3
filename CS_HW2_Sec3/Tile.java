@@ -2,6 +2,7 @@ public class Tile {
     
     int value;
     char color;
+    boolean isChained;
 
     /*
      * Creates a tile using the given color and value, colors are represented
@@ -12,6 +13,7 @@ public class Tile {
     public Tile(int value, char color) {
         this.value = value;
         this.color = color;
+        this.isChained = false;//Currently not chained
     }
 
     /*
@@ -72,8 +74,17 @@ public class Tile {
         return value;
     }
 
+    public boolean isChained() {
+        return isChained;
+    }
+
+    public void setChained(boolean isChained) {
+        this.isChained = isChained;
+    }
+
     public char getColor() {
         return color;
     }
+
     
 }

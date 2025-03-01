@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Player {
     String playerName;
     Tile[] playerTiles;
@@ -52,30 +54,28 @@ public class Player {
      * @return
      */
     public boolean isWinningHand() {
-        int chainCounter = 0;
-        int tilesCounter = 1; 
-        
-        for (int i = 0; i < numberOfTiles - 1; i++) {
-            if (playerTiles[i].compareTo(playerTiles[i + 1]) == 0) {
-                continue; // Don't count the same tiles.
-            }
-            
-            if (playerTiles[i].canFormChainWith(playerTiles[i + 1])) {
-                tilesCounter++;
-            } else {
-                if (tilesCounter == 4) {
-                    chainCounter++;
-                    if (chainCounter == 3) {
-                        return true;
-                    }
+        int chainCount = 0;
+        for(int i=0;i<numberOfTiles-1;i++){
+            ArrayList<Integer> colourValuesList = new ArrayList<>();
+            colourValuesList.add(playerTiles[i].colorNameToInt());
+            ArrayList<Tile>chain = new ArrayList<>();
+            chain.add(playerTiles[i]);
+            playerTiles[i].setChained(true);
+            for(int j=1;j<numberOfTiles;j++){
+                if(playerTiles[i].canFormChainWith(playerTiles[j])&&!playerTiles[j].isChained&&!colourValuesList.contains(playerTiles[j].colorNameToInt())){//If they can form a chain and playerTiles j is not chained yet and the current chain does not contain that color
+                       colourValuesList.add(playerTiles[j].colorNameToInt());
+                       chain.add(playerTiles[j]);
                 }
-                tilesCounter = 1;
+            }
+            if(chain.size()==4){//Means we formed a chain
+                for(int j=0;j<chain.size();j++){
+                    chain.get(j).setChained(true);
+                    chainCount++;
+                }
             }
         }
-        
-        return false;
+        return chainCount>=3;//Means that player has 3 chains
     }
-    
 
     public int findPositionOfTile(Tile t) {
         int tilePosition = -1;
@@ -106,4 +106,5 @@ public class Player {
     public String getName() {
         return playerName;
     }
+
 }
