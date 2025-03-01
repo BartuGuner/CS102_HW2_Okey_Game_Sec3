@@ -29,6 +29,29 @@ public class OkeyGame {
         }
     }
 
+    //sorting each players hand 
+    public void sortTiles(Tile[] playerTiles, int count) {
+        for (int i = 0; i < count - 1; i++) {
+            for (int j = 0; j < count - i - 1; j++) {
+                //for number
+                if (playerTiles[j].getValue() > playerTiles[j + 1].getValue()) {
+                    Tile temp = playerTiles[j];
+                    playerTiles[j] = playerTiles[j + 1];
+                    playerTiles[j + 1] = temp;
+                } 
+                //for color 
+                else if (playerTiles[j].getValue() == playerTiles[j + 1].getValue()) {
+                    if (playerTiles[j].compareTo(playerTiles[j + 1]) > 0) {
+                        Tile temp = playerTiles[j];
+                        playerTiles[j] = playerTiles[j + 1];
+                        playerTiles[j + 1] = temp;
+                    }
+                }
+            }
+        }
+    }
+
+
     /*
      * TODO: distributes the starting tiles to the players
      * player at index 0 gets 15 tiles and starts first
@@ -56,6 +79,8 @@ public class OkeyGame {
                 tilesArrList.remove(0); 
             }
             players[j].numberOfTiles = tilesToGive; 
+            
+            sortTiles(players[j].playerTiles, tilesToGive);
 
             for (int l = 0; l < tilesArrList.size(); l++) {
                 tiles[l] = tilesArrList.get(l);
