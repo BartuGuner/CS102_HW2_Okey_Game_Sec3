@@ -92,10 +92,9 @@ public class Player {
 
             colourValuesList.add(playerTiles[i].colorNameToInt());
             ArrayList<Tile> chain = new ArrayList<>();
-
             chain.add(playerTiles[i]);
             playerTiles[i].setChained(true);
-            for (int j = 1; j < numberOfTiles; j++) {
+            for (int j = i+1; j < numberOfTiles; j++) {
                 if (playerTiles[i].canFormChainWith(playerTiles[j]) && !playerTiles[j].isChained
                         && !colourValuesList.contains(playerTiles[j].colorNameToInt())) {// If they can form a chain and
                                                                                          // playerTiles j is not chained
@@ -108,8 +107,8 @@ public class Player {
             if (chain.size() == 4) {// Means we formed a chain
                 for (int j = 0; j < chain.size(); j++) {
                     chain.get(j).setChained(true);
-                    chainCount++;
                 }
+                chainCount++;
             }
         }
         for (int i = 0; i < numberOfTiles; i++) {// After the check reset all tiles
