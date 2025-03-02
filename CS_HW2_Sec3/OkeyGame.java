@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 
 public class OkeyGame {
@@ -83,6 +84,7 @@ public class OkeyGame {
             for (int l = 0; l < tilesArrList.size(); l++) {
                 tiles[l] = tilesArrList.get(l);
             }
+            System.out.println(Arrays.asList(players[j].playerTiles));
         }
     }
 
@@ -180,11 +182,12 @@ public class OkeyGame {
             shouldDiscard = false;
         } else {
             int currentChainCount = 1;
-            int minChainCount = 4;
+            int minChainCount = 5;
             int minChainNumber = -1;
             int totalChainCount = 0;
-            for (int i = 0; i < 14; i++) {
-                if (i != tiles.length - 2 && tiles[i].canFormChainWith(tiles[i + 1])) {
+            System.out.println(Arrays.toString(tiles));
+            for (int i = 0; i < tiles.length; i++) {
+                if (i != tiles.length - 1 && tiles[i].canFormChainWith(tiles[i + 1])) {
                     currentChainCount++;
                 } else {
                     if (currentChainCount <= minChainCount) {
@@ -200,7 +203,7 @@ public class OkeyGame {
             int possibleDiscardedChainCount = 1;
             if (!(minChainNumber == lastDiscardedTile.getValue())) {
                 boolean chainStarted = false;
-                for (int i = 0; i < 14; i++) {
+                for (int i = 0; i < tiles.length; i++) {
                     if (chainStarted) {
                         if (tiles[i].canFormChainWith(lastDiscardedTile)) {
                             possibleDiscardedChainCount++;
@@ -243,14 +246,14 @@ public class OkeyGame {
             if (i != tiles.length - 1 && tiles[i].compareTo(tiles[i + 1]) == 0) {
                 this.discardTile(i);
                 return;
-            } else if (i != tiles.length - 3 && !tiles[i].canFormChainWith(tiles[i + 1])
+            } else if (i < tiles.length - 3 && !tiles[i].canFormChainWith(tiles[i + 1])
                     && !tiles[i + 1].canFormChainWith(tiles[i + 2])) {
                 this.discardTile(i + 1);
                 return;
             }
         }
         int currentChainCount = 1;
-        int minChainCount = 4;
+        int minChainCount = 5;
         int minChainTileIndex = -1;
         for (int i = 0; i < tiles.length; i++) {
             if (i != tiles.length - 1 && tiles[i].canFormChainWith(tiles[i + 1])) {
@@ -275,7 +278,6 @@ public class OkeyGame {
      */
     public void discardTile(int tileIndex) {
         if (tileIndex >= 0 && tileIndex < players[currentPlayerIndex].numberOfTiles) {
-            System.out.println(tileIndex);
             lastDiscardedTile = players[currentPlayerIndex].playerTiles[tileIndex];
             players[currentPlayerIndex].getAndRemoveTile(tileIndex);
             displayDiscardInformation();
@@ -304,9 +306,9 @@ public class OkeyGame {
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
     }
 
-    public void setPlayerName(int index, String name) {
+    public void setPlayerName(int index, String name,boolean isComputer) {
         if (index >= 0 && index <= 3) {
-            players[index] = new Player(name);
+            players[index] = new Player(name,isComputer);
         }
     }
 
