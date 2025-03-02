@@ -84,7 +84,6 @@ public class OkeyGame {
             for (int l = 0; l < tilesArrList.size(); l++) {
                 tiles[l] = tilesArrList.get(l);
             }
-            System.out.println(Arrays.asList(players[j].playerTiles));
         }
     }
 
@@ -178,14 +177,14 @@ public class OkeyGame {
         Player currentPlayer = players[currentPlayerIndex];
         Tile[] tiles = currentPlayer.getTiles();
         boolean shouldDiscard = true;
-        if (currentPlayer.findPositionOfTile(lastDiscardedTile) == 0) {
+        if (currentPlayer.findPositionOfTile(lastDiscardedTile) != -1) {
+            System.out.println("---Not picking the last discarded because it is present---");
             shouldDiscard = false;
         } else {
             int currentChainCount = 1;
             int minChainCount = 5;
             int minChainNumber = -1;
             int totalChainCount = 0;
-            System.out.println(Arrays.toString(tiles));
             for (int i = 0; i < tiles.length; i++) {
                 if (i != tiles.length - 1 && tiles[i].canFormChainWith(tiles[i + 1])) {
                     currentChainCount++;
@@ -218,17 +217,23 @@ public class OkeyGame {
                     }
                 }
             }
-            if ((totalChainCount == 4 && possibleDiscardedChainCount < minChainCount))
+            if ((totalChainCount == 4 && possibleDiscardedChainCount < minChainCount)) {
+                System.out.println(
+                        "*******Not Discarding the Last tile since the chain count is 4 and minimum chain count is more that if Computer gets lasst discarded *******");
                 shouldDiscard = false;
 
+            }
+
         }
+
         if (shouldDiscard) {
-            System.out.println(players[currentPlayerIndex].getName() + " picked the last discarded tile");
-            this.getLastDiscardedTile();
+            System.out.println(players[currentPlayerIndex].getName() + " picked the last discarded tile of "
+                    + this.getLastDiscardedTile());
+            ;
 
         } else {
-            System.out.println(players[currentPlayerIndex].getName() + " picked the top tile");
-            this.getTopTile();
+            System.out.println(players[currentPlayerIndex].getName() + " picked the top tile of " + this.getTopTile());
+            ;
         }
     }
 
@@ -241,7 +246,7 @@ public class OkeyGame {
     public void discardTileForComputer() {
         Player currentPlayer = players[currentPlayerIndex];
         Tile[] tiles = currentPlayer.getTiles();
-
+        System.out.println(Arrays.asList(tiles));
         for (int i = 0; i < tiles.length; i++) {
             if (i != tiles.length - 1 && tiles[i].compareTo(tiles[i + 1]) == 0) {
                 this.discardTile(i);
@@ -303,12 +308,13 @@ public class OkeyGame {
     }
 
     public void passTurnToNextPlayer() {
+        System.out.println("------------------------------------");
         currentPlayerIndex = (currentPlayerIndex + 1) % 4;
     }
 
-    public void setPlayerName(int index, String name,boolean isComputer) {
+    public void setPlayerName(int index, String name, boolean isComputer) {
         if (index >= 0 && index <= 3) {
-            players[index] = new Player(name,isComputer);
+            players[index] = new Player(name, isComputer);
         }
     }
 

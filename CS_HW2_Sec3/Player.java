@@ -44,24 +44,21 @@ public class Player {
      * make sure playerTiles are not more than 15 at any time
      */
     public void addTile(Tile t) {
+        System.out.println("ADDING TO TILE: " + t.getValue() + t.getColor());
         if (numberOfTiles >= 15) {
             System.out.println("Can not add more tiles");
             return;
         }
 
         int index = 0;
-        while (index < numberOfTiles && t.getValue() >= playerTiles[index].getValue()) {
+        while (index < numberOfTiles-1 && t.getValue() >= playerTiles[index].getValue()) {
             if (t.getValue() == playerTiles[index].getValue()) {
                 if (t.colorNameToInt() <= playerTiles[index].colorNameToInt()) {
                     break;
                 }
-                while (t.colorNameToInt() > playerTiles[index].colorNameToInt()) {
-                    if(index < 13){
-                        index++;
-                    }
-                    else{
-                        break;
-                    }
+                while (t.colorNameToInt() > playerTiles[index].colorNameToInt()
+                        && t.getValue() == playerTiles[index].getValue() && index < numberOfTiles-1) {
+                    index++;
                 }
             } else
                 index++;
@@ -86,7 +83,7 @@ public class Player {
      * @return
      */
     public boolean isWinningHand() {
-        if(numberOfTiles <12){
+        if (numberOfTiles < 12) {
             return false;
         }
         int chainCount = 0;
@@ -115,7 +112,7 @@ public class Player {
                 }
             }
         }
-        for(int i=0; i<numberOfTiles;i++){//After the check reset all tiles
+        for (int i = 0; i < numberOfTiles; i++) {// After the check reset all tiles
             playerTiles[i].setChained(false);
         }
         return chainCount >= 3;// Means that player has 3 chains
@@ -134,7 +131,7 @@ public class Player {
     public void displayTiles() {
         System.out.println(playerName + "'s Tiles:");
         for (int i = 0; i < numberOfTiles; i++) {
-            if(playerTiles[i].toString() != null){
+            if (playerTiles[i].toString() != null) {
                 System.out.print(playerTiles[i].toString() + " ");
             }
         }
