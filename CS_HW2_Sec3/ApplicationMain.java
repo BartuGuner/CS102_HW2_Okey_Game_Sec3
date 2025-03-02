@@ -53,7 +53,13 @@ public class ApplicationMain {
                 }
 
                 System.out.print("Your choice: ");
+
                 playerChoice = sc.nextInt();
+                while(playerChoice!=1&&playerChoice!=2){
+                    System.out.println("Invalid choice,Enter again");
+                    System.out.print("Your choice: ");
+                    playerChoice = sc.nextInt();
+                }
 
                 // after the first turn we can pick up
                 if (!firstTurn) {
@@ -63,7 +69,6 @@ public class ApplicationMain {
                     } else if (playerChoice == 2) {
                         System.out.println("You picked up: " + game.getLastDiscardedTile());
                     }
-
                     // display the hand after picking up new tile
                     game.displayCurrentPlayersTiles();
                 } else {
