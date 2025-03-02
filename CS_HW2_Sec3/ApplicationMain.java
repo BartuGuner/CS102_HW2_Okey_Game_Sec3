@@ -81,6 +81,11 @@ public class ApplicationMain {
                     playerChoice = sc.nextInt();
 
                     // TODO: make sure the given index is correct, should be 0 <= index <= 14
+                    while(playerChoice<=0&&playerChoice>=14){
+                        System.out.println("Invalid index");
+                        System.out.print("Enter again:");
+                        playerChoice = sc.nextInt();
+                    }
 
                     game.discardTile(playerChoice);
                     game.passTurnToNextPlayer();
