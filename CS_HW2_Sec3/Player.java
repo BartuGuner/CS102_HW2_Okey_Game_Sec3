@@ -20,6 +20,9 @@ public class Player {
         for (int i = index; i < playerTiles.length; i++) {
             playerTiles[i] = playerTiles[i + 1];
         }
+
+        playerTiles[playerTiles.length - 1] = null;
+
         return returninTile;
     }
 
@@ -54,6 +57,9 @@ public class Player {
      * @return
      */
     public boolean isWinningHand() {
+        if(numberOfTiles <12){
+            return false;
+        }
         int chainCount = 0;
         for(int i=0;i<numberOfTiles-1;i++){
             ArrayList<Integer> colourValuesList = new ArrayList<>();
@@ -73,6 +79,9 @@ public class Player {
                     chainCount++;
                 }
             }
+        }
+        for(int i=0;i<numberOfTiles;i++){
+         playerTiles[i].setChained(false);
         }
         return chainCount>=3;//Means that player has 3 chains
     }
