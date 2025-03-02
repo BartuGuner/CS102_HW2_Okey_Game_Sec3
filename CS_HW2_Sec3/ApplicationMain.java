@@ -71,7 +71,7 @@ public class ApplicationMain {
                     firstTurn = false;
                 }
 
-                gameContinues = true;
+                gameContinues = !game.didGameFinish();
 
                 if (gameContinues) {
                     // if game continues we need to discard a tile using the given index by the
@@ -101,7 +101,7 @@ public class ApplicationMain {
 
                 // computer picks a tile from tile stack or other player's discard
                 game.pickTileForComputer();
-                gameContinues = true;
+                gameContinues = !game.didGameFinish();
 
                 if (gameContinues) {
                     // if game did not end computer should discard
