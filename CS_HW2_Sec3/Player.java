@@ -110,6 +110,9 @@ public class Player {
                 }
             }
         }
+        for(int i=0; i<numberOfTiles;i++){//After the check reset all tiles
+            playerTiles[i].setChained(false);
+        }
         return chainCount >= 3;// Means that player has 3 chains
     }
 
