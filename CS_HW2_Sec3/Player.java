@@ -44,7 +44,6 @@ public class Player {
      * make sure playerTiles are not more than 15 at any time
      */
     public void addTile(Tile t) {
-        System.out.println("ADDING TO TILE: " + t.getValue() + t.getColor());
         if (numberOfTiles >= 15) {
             System.out.println("Can not add more tiles");
             return;

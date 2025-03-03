@@ -159,9 +159,7 @@ public class OkeyGame {
      * finished the game, use isWinningHand() method of Player to decide
      */
     public boolean didGameFinish() {
-
-        return players[currentPlayerIndex].isWinningHand();
-
+        return players[currentPlayerIndex].isWinningHand() && this.tiles.length > 0;
     }
 
     /*
@@ -178,7 +176,6 @@ public class OkeyGame {
         Tile[] tiles = currentPlayer.getTiles();
         boolean shouldDiscard = true;
         if (currentPlayer.findPositionOfTile(lastDiscardedTile) != -1) {
-            System.out.println("---Not picking the last discarded because it is present---");
             shouldDiscard = false;
         } else {
             int currentChainCount = 1;
@@ -218,8 +215,6 @@ public class OkeyGame {
                 }
             }
             if ((totalChainCount == 4 && possibleDiscardedChainCount < minChainCount)) {
-                System.out.println(
-                        "*******Not Discarding the Last tile since the chain count is 4 and minimum chain count is more that if Computer gets lasst discarded *******");
                 shouldDiscard = false;
 
             }
@@ -227,13 +222,14 @@ public class OkeyGame {
         }
 
         if (shouldDiscard) {
-            System.out.println(players[currentPlayerIndex].getName() + " picked the last discarded tile of "
-                    + this.getLastDiscardedTile());
+            System.out.println(
+                    this.getLastDiscardedTile());
             ;
 
         } else {
             System.out.println(players[currentPlayerIndex].getName() + " picked the top tile of " + this.getTopTile());
             ;
+            System.out.println("There are " + this.tiles.length + " tiles left.  ");
         }
     }
 
@@ -246,7 +242,6 @@ public class OkeyGame {
     public void discardTileForComputer() {
         Player currentPlayer = players[currentPlayerIndex];
         Tile[] tiles = currentPlayer.getTiles();
-        System.out.println(Arrays.asList(tiles));
         for (int i = 0; i < tiles.length; i++) {
             if (i != tiles.length - 1 && tiles[i].compareTo(tiles[i + 1]) == 0) {
                 this.discardTile(i);
